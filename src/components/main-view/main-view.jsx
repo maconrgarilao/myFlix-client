@@ -8,19 +8,10 @@ export const MainView = () => {
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     useEffect(() => {
-        fetch("https://myplix.herokuapp.com/")
+        fetch("https://myplix.herokuapp.com/movies")
             .then((response) => response.json())
             .then((data) => {
-                const moviesFromApi = data.docs.map((doc) => {
-                    return {
-                        id: doc.key,
-                        title: doc.title,
-                        image: src.image,
-                        director: doc.director
-                    };
-                });
-
-                setMovies(moviesfromApi);
+              console.log("movies from api", data);
             });
     }, []);
 
