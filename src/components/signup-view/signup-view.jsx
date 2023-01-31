@@ -8,7 +8,7 @@ export const SignupView = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        
         const data = {
             Username: username,
             Password: password,
@@ -16,7 +16,7 @@ export const SignupView = () => {
             Birthday: birthday
         };
 
-        fetch("https://myplix.herokuapp.com/signup", {
+        fetch("https://myplix.herokuapp.com/users/", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+
+import { SignupView } from "../signup-view/signup-view";
+import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
-import { LoginView } from "../login-view/login-view";
-import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -21,7 +22,6 @@ export const MainView = () => {
         })
             .then((response) => response.json())
             .then((movies) => {
-              console.log(data);
               setMovies(movies);
             });
     }, [token]);
@@ -60,8 +60,8 @@ export const MainView = () => {
                 }}>
                     Logout
                 </button>
-                {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} onMovieClick={(newSelectedMovie) => {
+                {movies.map((movie, index) => (
+                    <MovieCard key={index} movie={movie} onMovieClick={(newSelectedMovie) => {
                         setSelectedMovie(newSelectedMovie);
                     }} />
                 ))}
