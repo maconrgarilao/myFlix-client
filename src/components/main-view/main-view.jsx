@@ -1,24 +1,52 @@
 import { useState, useEffect } from "react";
+
+import { SignupView } from "../signup-view/signup-view";
+import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
+    const [user, setUser] = useState(storedUser? storedUser : null);
+    const [token, setToken] = useState(storedToken? storedToken : null);
     const [movies, setMovies] = useState([]);
-
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     useEffect(() => {
-        fetch("https://myplix.herokuapp.com/movies")
+        if (!token)
+            return;
+
+        fetch("https://myplix.herokuapp.com/movies", {
+            headers: {Authorization: `Bearer ${token}` }
+        })
             .then((response) => response.json())
-            .then((data) => {
-              console.log("movies from api", data);
-              setMovies(data);
+            .then((movies) => {
+              setMovies(movies);
             });
-    }, []);
+    }, [token]);
+
+    if (!user) {
+        return (
+            <>
+            <LoginView
+            onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+            }}
+            />
+            or
+            <SignupView />
+            </>
+        );
+    }
 
     if (selectedMovie) {
         return (
+            <>
+            <button onClick={() => {setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
             <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+            </>
         );
     }
 
@@ -27,8 +55,13 @@ export const MainView = () => {
     } else {
         return (
             <div>
-                {movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} onMovieClick={(newSelectedMovie) => {
+                <button onClick={() => {
+                    setUser(null);
+                }}>
+                    Logout
+                </button>
+                {movies.map((movie, index) => (
+                    <MovieCard key={index} movie={movie} onMovieClick={(newSelectedMovie) => {
                         setSelectedMovie(newSelectedMovie);
                     }} />
                 ))}
