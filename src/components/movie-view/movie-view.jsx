@@ -1,3 +1,4 @@
+import "./movie-view.scss";
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -19,7 +20,7 @@ export class MovieView extends React.Component {
                     <span className="label">Description: </span>
                     <span className="value">{movie.Description}</span>
                 </div>
-                <button onClick={() => { onBackClick(null); }}>Back</button>
+                <button onClick={onBackClick} className="back-button" style={{ cursor: "pointer" }}>Back</button>
             </div>
         );
     }
