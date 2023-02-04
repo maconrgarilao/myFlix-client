@@ -4,6 +4,7 @@ import { SignupView } from "../signup-view/signup-view";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -79,9 +80,24 @@ export const MainView = () => {
                         ) : (
                             <Col md={8}>
                                 <MovieView 
-                                movies={movies} />
+                                movies={movies} username={user.Username} favoriteMovies={user.FavoriteMovies}/>
                             </Col>
                         )}
+                    </>
+                }
+                />
+
+                <Route
+                path="/users/:Username"
+                element={
+                    <>
+                    {!user ? (
+                        <Navigate to="/login" replace />
+                    ) : (
+                        <Col md={8}>
+                            <ProfileView user={user} movies={movies}/>
+                        </Col>
+                    )}
                     </>
                 }
                 />
@@ -106,6 +122,7 @@ export const MainView = () => {
                     </>
                 }
                 />
+                
             </Routes>
         </Row>
         </BrowserRouter>
