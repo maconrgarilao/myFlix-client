@@ -3,14 +3,22 @@ import React from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export const MovieView = ({ movies, username, token }) => {
+export const MovieView = ({ movies, username, favoriteMovies }) => {
     const { index } = useParams();
-
+    const storedToken = localStorage.getItem("token");
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     const movie = movies.find((m) => m.id === index);
+    const [movieExists, setMovieExists] = useState(false);
+    const [disableRemove, setDisableRemove] = useState(true);
+    const [userFavoriteMovies, setFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+
+    console.log(username)
 
     const addFavoriteMovie = async() => {
-        const favoriteMovie = await fetch(`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
+        const favoriteMovie = await fetch(`https://myplix.herokuapp.com/users/:Username/movies/:MovieId`,
         {
             method: "POST",
             headers: {
@@ -19,16 +27,22 @@ export const MovieView = ({ movies, username, token }) => {
             }
         })
 
+        console.log(storedToken)
+
         const response = await favoriteMovie.json()
         console.log(response)
-        if (response.ok) {
-            localStorage.removeItem("user")
+        setUserFavoriteMovies(response.FavoriteMovies)
+        if (response) {
+            alert("Movie added to Favorites!");
             localStorage.setItem("user", JSON.stringify (response))
+            window.location.reload();
+        } else {
+            alert("Something went wrong");
         }
     }
 
-    const removeFavorite = async() => {
-        const removeFavorite = await fetch (`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
+    const removeFavoriteMovie = async() => {
+        const favoriteMovie = await fetch (`https://myplix.herokuapp.com/users/:Username/movies/:MovieId`,
         {
             method: "DELETE",
             headers: {
@@ -36,13 +50,39 @@ export const MovieView = ({ movies, username, token }) => {
                 "Content-Type": "application/json"
             }
         })
-        const response = await removeFavorite.json()
+        const response = await favoriteMovie.json()
         console.log(response)
-        if (response.ok) {
-            localStorage.removeItem("user")
+        if (response) {
+            alert("Movie removed from Favorites");
             localStorage.setItem("user", JSON.stringify (response))
+            window.location.reload();
+        } else {
+            alert("Something went wrong");
         }
     };
+
+    const movieAdded = () => {
+        const hasMovie = userFavoriteMovies.some((m) => m === movieId)
+        console.log("userFavMov", userFavoriteMovies)
+        console.log("index", index)
+        if (hasMovie) {
+            setMovieExists(true)
+        }
+    };
+
+    const movieRemoved = () => {
+        const hasMovie = userFavoriteMovies.some((m) => m === movieId)
+        if (hasMovie) {
+            setDisableRemove(false)
+        }
+    };
+
+    console.log("movieExists", movieExists)
+
+    useEffect (() => {
+        movieAdded()
+        movieRemoved()
+    },[])
 
     return (
         <Row className="movie-view">
@@ -63,12 +103,14 @@ export const MovieView = ({ movies, username, token }) => {
             <Button
             className="button-add-favorite"
             onClick={addFavoriteMovie}
+            disabled={movieExists}
             >
                 + Add to Favorites
             </Button>
             <Button
             variant="danger"
-            onClick={removeFavorite}
+            onClick={removeFavoriteMovie}
+            disabled={disableRemove}
             >
                 - Remove from Favorites
             </Button>
