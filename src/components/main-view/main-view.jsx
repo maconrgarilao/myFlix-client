@@ -70,7 +70,7 @@ export const MainView = () => {
                 />
 
                 <Route 
-                path="/movies/:Title"
+                path="/movies/:id"
                 element={
                     <>
                     {!user ? (

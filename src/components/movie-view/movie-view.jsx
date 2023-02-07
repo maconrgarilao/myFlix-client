@@ -7,10 +7,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export const MovieView = ({ movies, username, favoriteMovies }) => {
-    const { index } = useParams();
+    const { id } = useParams();
     const storedToken = localStorage.getItem("token");
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const movie = movies.find((m) => m.id === index);
+    const movie = movies.find((m) => m._id === id);
     const [movieExists, setMovieExists] = useState(false);
     const [disableRemove, setDisableRemove] = useState(true);
     const [userFavoriteMovies, setFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
@@ -18,7 +18,7 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
     console.log(username)
 
     const addFavoriteMovie = async() => {
-        const favoriteMovie = await fetch(`https://myplix.herokuapp.com/users/:Username/movies/:MovieId`,
+        const favoriteMovie = await fetch(`https://myplix.herokuapp.com/users/:Username/movies/:MovieID`,
         {
             method: "POST",
             headers: {
@@ -42,7 +42,7 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
     }
 
     const removeFavoriteMovie = async() => {
-        const favoriteMovie = await fetch (`https://myplix.herokuapp.com/users/:Username/movies/:MovieId`,
+        const favoriteMovie = await fetch (`https://myplix.herokuapp.com/users/:Username/movies/:MovieID`,
         {
             method: "DELETE",
             headers: {
@@ -64,7 +64,7 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
     const movieAdded = () => {
         const hasMovie = userFavoriteMovies.some((m) => m === movieId)
         console.log("userFavMov", userFavoriteMovies)
-        console.log("index", index)
+        console.log("index", id)
         if (hasMovie) {
             setMovieExists(true)
         }
