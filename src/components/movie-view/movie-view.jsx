@@ -6,31 +6,30 @@ import { Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export const MovieView = ({ movies, username, favoriteMovies }) => {
-    const { id } = useParams();
+export const MovieView = ({ movies, username, FavoriteMovies }) => {
+    const { movieId } = useParams();
     const storedToken = localStorage.getItem("token");
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const movie = movies.find((m) => m._id === id);
+    const movie = movies.find((m) => m._id === movieId);
     const [movieExists, setMovieExists] = useState(false);
     const [disableRemove, setDisableRemove] = useState(true);
-    const [userFavoriteMovies, setFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: favoriteMovies);
+    const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
 
     console.log(username)
 
-    const addFavoriteMovie = async() => {
-        const favoriteMovie = await fetch(`https://myplix.herokuapp.com/users/:Username/movies/:MovieID`,
+    const addFavoriteMovies = async() => {
+        const FavoriteMovies = await fetch(`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
         {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${storedToken}`,
                 "Content-Type": "application/json",
             }
         })
 
         console.log(storedToken)
 
-        const response = await favoriteMovie.json()
-        console.log(response)
+        const response = await FavoriteMovies.json()
         setUserFavoriteMovies(response.FavoriteMovies)
         if (response) {
             alert("Movie added to Favorites!");
@@ -42,16 +41,15 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
     }
 
     const removeFavoriteMovie = async() => {
-        const favoriteMovie = await fetch (`https://myplix.herokuapp.com/users/:Username/movies/:MovieID`,
+        const FavoriteMovie = await fetch (`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
         {
             method: "DELETE",
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${storedToken}`,
                 "Content-Type": "application/json"
             }
         })
-        const response = await favoriteMovie.json()
-        console.log(response)
+        const response = await FavoriteMovie.json()
         if (response) {
             alert("Movie removed from Favorites");
             localStorage.setItem("user", JSON.stringify (response))
@@ -62,16 +60,14 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
     };
 
     const movieAdded = () => {
-        const hasMovie = userFavoriteMovies.some((m) => m === movieId)
-        console.log("userFavMov", userFavoriteMovies)
-        console.log("index", id)
+        const hasMovie = userFavoriteMovies.some((m) => m._id === movieId)
         if (hasMovie) {
             setMovieExists(true)
         }
     };
 
     const movieRemoved = () => {
-        const hasMovie = userFavoriteMovies.some((m) => m === movieId)
+        const hasMovie = userFavoriteMovies.some((m) => m._id === movieId)
         if (hasMovie) {
             setDisableRemove(false)
         }
@@ -97,18 +93,22 @@ export const MovieView = ({ movies, username, favoriteMovies }) => {
                 <span className="label"><h5>Description: </h5></span>
                 <span className="value">{movie.Description}</span>
             </div>
+        </Col>
+        <Col>
             <Link to={`/`}>
                 <button className="back-button" style={{ cursor: "pointer" }}>Back</button>
             </Link>
+        </Col>
+        <Col>
             <Button
             className="button-add-favorite"
-            onClick={addFavoriteMovie}
+            onClick={addFavoriteMovies}
             disabled={movieExists}
             >
                 + Add to Favorites
             </Button>
             <Button
-            variant="danger"
+            variant="primary"
             onClick={removeFavoriteMovie}
             disabled={disableRemove}
             >

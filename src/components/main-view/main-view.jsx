@@ -70,7 +70,7 @@ export const MainView = () => {
                 />
 
                 <Route 
-                path="/movies/:id"
+                path="/movies/:movieId"
                 element={
                     <>
                     {!user ? (
@@ -80,7 +80,7 @@ export const MainView = () => {
                         ) : (
                             <Col md={8}>
                                 <MovieView 
-                                movies={movies} username={user.Username} favoriteMovies={user.FavoriteMovies}/>
+                                movies={movies} username={user.Username} favoriteMovies={user.favoriteMovies}/>
                             </Col>
                         )}
                     </>
@@ -112,8 +112,8 @@ export const MainView = () => {
                         <Col>The list is empty!</Col>
                     ) : (
                         <>
-                        {movies.map((movie, index) => (
-                            <Col className="mb-4" key={index} md={3}>
+                        {movies.map((movie, movieId) => (
+                            <Col className="mb-4" key={movieId} md={3}>
                                 <MovieCard movie={movie} />
                             </Col>
                         ))}
