@@ -1,105 +1,110 @@
-import { useState, useEffect } from "react";
-import { Button, Container, Form, Row, Col, Card } from "react-bootstrap";
+import React from "react";
+import { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
-export const UpdateForm = ({ user }) => {
+export const UpdateForm =({ storedToken, storedUser}) => {
 
-    const storedToken = localStorage.getItem("token");
-    const storedMovies = JSON.parse(localStorage.getItem("movies"))
-    const storedUser = localStorage.getItem("user");
-    const [token] = useState(storedToken ? storedToken : null);
+    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const [user, setUser] = useState(storedUser ? storedUser : null);
 
-    const [Username, setUsername] = useState('');
-    const [Password, setPassword] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Birthday, setBirthday] = useState("");
+    const [username, setUsername] = useState(user.Username);
+    const [password, setPassword] = useState(user.Password);
+    const [email, setEmail] = useState(user.Email);
+    const [birthday, setBirthday] = useState(user.Birthday);
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
-
-        const data = {
-            Username: Username,
-            Password: Password,
-            Email: Email,
-            Birthday: Birthday
-        };
-        console.log(data)
-
-        const updateUser = await fetch(`https://myplix.herokuapp.com/users/:Username`, {
-            method: "PUT",
-            body: JSON.stringify(data),
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
+    const updateUser = (username) => {
+        fetch(`https://myplix.herokuapp.com/users/${username}`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}`},
+        }).then(response => response.json())
+        .then((updateUser) => {
+            if (updatedUser) {
+                setUser(updatedUser);
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                window.location.reload();
+            }
         })
+        .catch((error) => {
+            console.log(err);
+        });
+    };
 
-        const response = await updateUser.json()
-        console.log(response)
-        if (response) {
-            alert("Account successfully updated! Please log in again");
-            localStorage.clear();
-            window.location.reload();
-        } else {
-            alert("Something went wrong");
-        }
-
-        const handleDeregister = () => {
-            fetch(`https://myplix.herokuapp.com/users/:Username`, {
-                method: "DELETE",
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = {
+            Username: username,
+            Password: password,
+            Email: email,
+            Birthday: birthday,
+        };
+        fetch(
+            `https://myplix.herokuapp.com/users/${storedUser.Username}`,
+            {
+                method: "PUT",
+                body: JSON.stringify(data),
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then((response) => {
-                if (response.ok) {
-                    alert("Account successfully deleted");
-                    localStorage.clear();
-                    window.location.reload();
-                } else {
-                    alert("Something went wrong");
-                }
-            });
-        };
-
-        return (
-            <>
-            <h4>Update Profile Information</h4>
-            <Form onSubmit={(e) => handleSubmit(e)}>
-                <Form.Group>
-                    <Form.Label>Username: </Form.Label>
-                    <Form.Control
-                    type="username"
-                    value={Username}
-                    onChange={e => setUsername(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Password: </Form.Label>
-                    <Form.Control
-                    type="password"
-                    value={Password}
-                    onChange={e => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Email: </Form.Label>
-                    <Form.Control
-                    type="text"
-                    value={Email}
-                    onChange={e => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Birthday </Form.Label>
-                    <Form.Control
-                    type="date"
-                    value={Birthday}
-                    onChange={e => setBirthday(e.target.value)}
-                    />
-                </Form.Group>
-            </Form>
-            <Button onClick={() => handleDeregister(user._id)} className="button-delete mt-3" type="submit" variant="danger" >Delete Account</Button>
-            </>
+                    'Content-Type': 'application/json',
+                },
+            }
         )
-    }
+        .then((response) => {
+            if (response.ok) {
+                alert("Changes saved");
+                updateUser(username);
+            } else {
+                alert("Something went wrong");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+
+
+    return (
+        <>
+        <h4>Update Info</h4>
+        <Form className="profile-form" onSubmit={(e) => handleSubmit(e)}>
+            <Form.Group>
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                type="text"
+                name="Username"
+                defaultValue={user.Username}
+                onChange={e => handleUpdate(e)}
+                required
+                placeholder="Enter a username" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                 type="password"
+                 name="password"
+                 defaultValue=""
+                 onChange={e => handleUpdate(e)}
+                required
+                minLength="8"
+                placeholder="Password must be 8 or more characters" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>E-mail:</Form.Label>
+                <Form.Control
+                 type="email"
+                 defaultValue={user.Email}
+                 onChange={e => handleUpdate(e)}
+                required
+                placeholder="Enter your email address" 
+                />
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Submit
+            </Button>
+        </Form>
+        </>
+    )
 }
+
+export default UpdateForm
