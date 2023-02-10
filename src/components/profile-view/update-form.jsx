@@ -25,7 +25,7 @@ export const UpdateForm =({ storedToken, storedUser}) => {
             }
         })
         .catch((error) => {
-            console.log(err);
+            console.log(error);
         });
     };
 
@@ -67,40 +67,48 @@ export const UpdateForm =({ storedToken, storedUser}) => {
         <h4>Update Info</h4>
         <Form className="profile-form" onSubmit={(e) => handleSubmit(e)}>
             <Form.Group>
-                <Form.Label>Username:</Form.Label>
+                <Form.Label>Username: </Form.Label>
                 <Form.Control
                 type="text"
-                name="Username"
-                defaultValue={user.Username}
-                onChange={e => handleUpdate(e)}
+                value={username}
+                onChange={e => setUsername(e.target.value)}
                 required
                 placeholder="Enter a username" 
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Password:</Form.Label>
+                <Form.Label>Password: </Form.Label>
                 <Form.Control
                  type="password"
-                 name="password"
-                 defaultValue=""
-                 onChange={e => handleUpdate(e)}
+                 value={password}
+                 onChange={e => setPassword(e.target.value)}
                 required
                 minLength="8"
                 placeholder="Password must be 8 or more characters" 
                 />
             </Form.Group>
             <Form.Group>
-                <Form.Label>E-mail:</Form.Label>
+                <Form.Label>E-mail: </Form.Label>
                 <Form.Control
                  type="email"
-                 defaultValue={user.Email}
-                 onChange={e => handleUpdate(e)}
+                 value={email}
+                 onChange={e => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email address" 
                 />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Submit
+            <Form.Group>
+                <Form.Label>Birthday: </Form.Label>
+                <Form.Control
+                 type="date"
+                 value={birthday}
+                 onChange={e => setBirthday(e.target.value)}
+                required
+                placeholder="Enter your email address" 
+                />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+            Save Changes
             </Button>
         </Form>
         </>

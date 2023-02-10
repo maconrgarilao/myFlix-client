@@ -27177,7 +27177,6 @@ var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-<<<<<<< HEAD
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [movies, setMovies] = (0, _react.useState)([]);
@@ -27192,33 +27191,6 @@ const MainView = ()=>{
         token
     ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.BrowserRouter), {
-=======
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            id: 1,
-            Title: "Notting Hill",
-            Description: "The story is of a romance between a London bookseller (Grant) and a famous American actress (Roberts) who happens to walk into his shop.",
-            Image: "https://m.media-amazon.com/images/M/MV5BMTE5OTkwYzYtNDhlNC00MzljLTk1YTktY2IxZjliZmNjMjUzL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg",
-            Director: "Roger Michell"
-        },
-        {
-            id: 2,
-            Title: "300",
-            Description: "The plot revolves around King Leonidas, who leads 300 Spartans into battle against Persian god-king Xerxes and his big and good army of more than 300,000 soldiers.",
-            Image: "https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg",
-            Director: "Zack Snyder"
-        },
-        {
-            id: 3,
-            Title: "Titanic",
-            Description: "Incorporating both historical and fictionalized aspects, it is based on accounts of the sinking of the RMS Titanic and stars Leonardo DiCaprio and Kate Winslet as members of different social classes who fall in love aboard the ship during its ill-fated maiden voyage.",
-            Image: "https://upload.wikimedia.org/wikipedia/en/1/18/Titanic_%281997_film%29_poster.png",
-            Director: "James Cameron"
-        }
-    ]);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
-    if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
->>>>>>> ce781c330bafdaa483776dbbe0388774c099aa39
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navigationBar.NavigationBar), {
                 user: user,
@@ -27232,7 +27204,6 @@ const MainView = ()=>{
                 lineNumber: 31,
                 columnNumber: 9
             }, undefined),
-<<<<<<< HEAD
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
                 className: "justify-content-md-center",
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Routes), {
@@ -27349,52 +27320,6 @@ const MainView = ()=>{
         fileName: "src/components/main-view/main-view.jsx",
         lineNumber: 30,
         columnNumber: 9
-=======
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
-                movie: selectedMovie,
-                onBackClick: ()=>setSelectedMovie(null)
-            }, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 36,
-                columnNumber: 13
-            }, undefined)
-        ]
-    }, void 0, true);
-    if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: "The list is empty!"
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 42,
-        columnNumber: 16
-    }, undefined);
-    else return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                onClick: ()=>{
-                    setUser(null);
-                },
-                children: "Logout"
-            }, void 0, false, {
-                fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 46,
-                columnNumber: 17
-            }, undefined),
-            movies.map((movie, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
-                    movie: movie,
-                    onMovieClick: (newSelectedMovie)=>{
-                        setSelectedMovie(newSelectedMovie);
-                    }
-                }, void 0, false, {
-                    fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 52,
-                    columnNumber: 21
-                }, undefined))
-        ]
-    }, void 0, true, {
-        fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 45,
-        columnNumber: 13
->>>>>>> ce781c330bafdaa483776dbbe0388774c099aa39
     }, undefined);
 };
 _s(MainView, "PUnVg6+lI+7tf2Wb7jSoGqC3UJ4=");
@@ -27407,7 +27332,6 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-<<<<<<< HEAD
 },{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../signup-view/signup-view":"4OGiN","../login-view/login-view":"9YtA0","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","../profile-view/profile-view":"2vVqf","../navigation-bar/navigation-bar":"bsPVM","react-bootstrap/Row":"cMC39","react-bootstrap/Col":"2L2I6","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F"}],"4OGiN":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$73d1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -27659,13 +27583,6 @@ exports.default = Button;
     });
     else window.classNames = classNames;
 })();
-=======
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../movie-card/movie-card":"bwuIu","../movie-view/movie-view":"ggaUx","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F"}],"bwuIu":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$67b2 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$67b2.prelude(module);
->>>>>>> ce781c330bafdaa483776dbbe0388774c099aa39
 
 },{}],"8YUbR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -41504,7 +41421,6 @@ Tooltip.defaultProps = defaultProps;
 Tooltip.displayName = "Tooltip";
 exports.default = Tooltip;
 
-<<<<<<< HEAD
 },{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./helpers":"gotcT","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf"}],"9xmpe":[function(require,module,exports) {
 /**
  * React Router DOM v6.8.0
@@ -41597,12 +41513,6 @@ function _extends() {
             for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
         }
         return target;
-=======
-},{"74fd818b1f06e812":"jZTZJ","75cb8dcdb265e7c8":"fqKuf"}],"kqRMf":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
->>>>>>> ce781c330bafdaa483776dbbe0388774c099aa39
     };
     return _extends.apply(this, arguments);
 }
@@ -42414,7 +42324,6 @@ function warning(cond, message) {
     }
 } //#endregion
 
-<<<<<<< HEAD
 },{"react":"21dqq","react-router":"dbWyW","@remix-run/router":"5ncDG","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf"}],"dbWyW":[function(require,module,exports) {
 /**
  * React Router v6.8.0
@@ -46508,9 +46417,6 @@ function getTargetMatch(matches, location) {
 } //#endregion
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf"}],"d6HH4":[function() {},{}],"ggaUx":[function(require,module,exports) {
-=======
-},{"a663da55111a89b0":"aLqh3"}],"ggaUx":[function(require,module,exports) {
->>>>>>> ce781c330bafdaa483776dbbe0388774c099aa39
 var $parcel$ReactRefreshHelpers$e9f6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46829,7 +46735,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                 window.location.reload();
             }
         }).catch((error)=>{
-            console.log(err);
+            console.log(error);
         });
     };
     const handleSubmit = (event)=>{
@@ -46872,7 +46778,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Label, {
-                                children: "Username:"
+                                children: "Username: "
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-form.jsx",
                                 lineNumber: 70,
@@ -46880,9 +46786,8 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                 type: "text",
-                                name: "Username",
-                                defaultValue: user.Username,
-                                onChange: (e)=>handleUpdate(e),
+                                value: username,
+                                onChange: (e)=>setUsername(e.target.value),
                                 required: true,
                                 placeholder: "Enter a username"
                             }, void 0, false, {
@@ -46899,65 +46804,89 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Label, {
-                                children: "Password:"
+                                children: "Password: "
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-form.jsx",
-                                lineNumber: 81,
+                                lineNumber: 80,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                 type: "password",
-                                name: "password",
-                                defaultValue: "",
-                                onChange: (e)=>handleUpdate(e),
+                                value: password,
+                                onChange: (e)=>setPassword(e.target.value),
                                 required: true,
                                 minLength: "8",
                                 placeholder: "Password must be 8 or more characters"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-form.jsx",
-                                lineNumber: 82,
+                                lineNumber: 81,
                                 columnNumber: 17
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-form.jsx",
-                        lineNumber: 80,
+                        lineNumber: 79,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Label, {
-                                children: "E-mail:"
+                                children: "E-mail: "
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-form.jsx",
-                                lineNumber: 93,
+                                lineNumber: 91,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
                                 type: "email",
-                                defaultValue: user.Email,
-                                onChange: (e)=>handleUpdate(e),
+                                value: email,
+                                onChange: (e)=>setEmail(e.target.value),
                                 required: true,
                                 placeholder: "Enter your email address"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/update-form.jsx",
-                                lineNumber: 94,
+                                lineNumber: 92,
                                 columnNumber: 17
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/update-form.jsx",
-                        lineNumber: 92,
+                        lineNumber: 90,
+                        columnNumber: 13
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Label, {
+                                children: "Birthday: "
+                            }, void 0, false, {
+                                fileName: "src/components/profile-view/update-form.jsx",
+                                lineNumber: 101,
+                                columnNumber: 17
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
+                                type: "date",
+                                value: birthday,
+                                onChange: (e)=>setBirthday(e.target.value),
+                                required: true,
+                                placeholder: "Enter your email address"
+                            }, void 0, false, {
+                                fileName: "src/components/profile-view/update-form.jsx",
+                                lineNumber: 102,
+                                columnNumber: 17
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/update-form.jsx",
+                        lineNumber: 100,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                         variant: "primary",
                         type: "submit",
-                        onClick: handleSubmit,
-                        children: "Submit"
+                        children: "Save Changes"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/update-form.jsx",
-                        lineNumber: 102,
+                        lineNumber: 110,
                         columnNumber: 13
                     }, undefined)
                 ]
@@ -46980,7 +46909,7 @@ $RefreshReg$(_c, "UpdateForm");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F","react-bootstrap":"3AD9A"}],"7O9I0":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F"}],"7O9I0":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$9d6d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47059,7 +46988,7 @@ $RefreshReg$(_c, "FavMovies");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F","../movie-card/movie-card":"bwuIu","react-bootstrap":"3AD9A","react/jsx-dev-runtime":"iTorj"}],"66eot":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap":"3AD9A","../movie-card/movie-card":"bwuIu","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F"}],"66eot":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$1330 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47175,7 +47104,7 @@ $RefreshReg$(_c, "UserInfo");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F","react-router":"dbWyW","../movie-card/movie-card":"bwuIu","react-bootstrap":"3AD9A"}],"bsPVM":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-router":"dbWyW","react":"21dqq","../movie-card/movie-card":"bwuIu","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"kqRMf","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4L01F"}],"bsPVM":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$abf5 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
