@@ -1,44 +1,122 @@
 import "./movie-view.scss";
 import React from "react";
-import PropTypes from "prop-types";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { Button, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export class MovieView extends React.Component {
+export const MovieView = ({ movies, username, FavoriteMovies }) => {
+    const { movieId } = useParams();
+    const storedToken = localStorage.getItem("token");
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const movie = movies.find((m) => m._id === movieId);
+    const [movieExists, setMovieExists] = useState(false);
+    const [disableRemove, setDisableRemove] = useState(true);
+    const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
 
-    render() {
-        const { movie, onBackClick } = this.props;
+    console.log(username)
 
-        return (
-            <div className="movie-view">
-                <div className="movie-poster">
-                    <img src={movie.ImagePath} />
-                </div>
-                <div className="movie-title">
-                    <span className="label">Title: </span>
-                    <span className="value">{movie.Title}</span>
-                </div>
-                <div className="movie-description">
-                    <span className="label">Description: </span>
-                    <span className="value">{movie.Description}</span>
-                </div>
-                <button onClick={onBackClick} className="back-button" style={{ cursor: "pointer" }}>Back</button>
-            </div>
-        );
+    const addFavoriteMovies = async() => {
+        const FavoriteMovies = await fetch(`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                "Content-Type": "application/json",
+            }
+        })
+
+        console.log(storedToken)
+
+        const response = await FavoriteMovies.json()
+        setUserFavoriteMovies(response.FavoriteMovies)
+        if (response) {
+            alert("Movie added to Favorites!");
+            localStorage.setItem("user", JSON.stringify (response))
+            window.location.reload();
+        } else {
+            alert("Something went wrong");
+        }
     }
-}
 
-MovieView.propTypes = {
-    movie: PropTypes.shape({
-        Title: PropTypes.string.isRequired,
-        Description: PropTypes.string.isRequired,
-        ImagePath: PropTypes.string.isRequired,
-        Genre: PropTypes.shape({
-            Name: PropTypes.string.isRequired,
-            Definition: PropTypes.string.isRequired,
-        }).isRequired,
-        Director: PropTypes.shape({
-            Name: PropTypes.string.isRequired,
-            Bio: PropTypes.string.isRequired,
-        }).isRequired,
-    }).isRequired,
-    onBackClick: PropTypes.func.isRequired,
+    const removeFavoriteMovie = async() => {
+        const FavoriteMovie = await fetch (`https://myplix.herokuapp.com/users/${username}/movies/${movieId}`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${storedToken}`,
+                "Content-Type": "application/json"
+            }
+        })
+        const response = await FavoriteMovie.json()
+        if (response) {
+            alert("Movie removed from Favorites");
+            localStorage.setItem("user", JSON.stringify (response))
+            window.location.reload();
+        } else {
+            alert("Something went wrong");
+        }
+    };
+
+    const movieAdded = () => {
+        const hasMovie = userFavoriteMovies.some((m) => m._id === movieId)
+        if (hasMovie) {
+            setMovieExists(true)
+        }
+    };
+
+    const movieRemoved = () => {
+        const hasMovie = userFavoriteMovies.some((m) => m._id === movieId)
+        if (hasMovie) {
+            setDisableRemove(false)
+        }
+    };
+
+    console.log("movieExists", movieExists)
+
+    useEffect (() => {
+        movieAdded()
+        movieRemoved()
+    },[])
+
+    return (
+        <Row className="movie-view">
+        <Col md={6} className="movie-poster" >
+            <img className="movie-img" crossOrigin="anonymous" src={movie.ImagePath} />
+        </Col>
+        <Col md={6}>
+            <div className="movie-title">
+                <span className="value"><h2>{movie.Title}</h2></span>
+            </div>
+            <div className="movie-description">
+                <span className="label"><h5>Description: </h5></span>
+                <span className="value">{movie.Description}</span>
+            </div>
+        </Col>
+        <Col>
+            <Link to={`/`}>
+                <button className="back-button" style={{ cursor: "pointer" }}>Back</button>
+            </Link>
+        </Col>
+        <Col>
+            <Button
+            className="button-add-favorite"
+            onClick={addFavoriteMovies}
+            disabled={movieExists}
+            >
+                + Add to Favorites
+            </Button>
+            <Button
+            variant="primary"
+            onClick={removeFavoriteMovie}
+            disabled={disableRemove}
+            >
+                - Remove from Favorites
+            </Button>
+        </Col>
+        </Row>
+    );
 };
+
+
