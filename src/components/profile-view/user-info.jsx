@@ -20,7 +20,7 @@ export const UserInfo = ({user}) => {
             </Col>
             <Col>
             <span>Birthday: </span>
-            <span className="fw-bolder">{user.Birthday}</span>
+            <span className="fw-bolder">{new Date(user.Birthday).toLocaleDateString("en-US")}</span>
             </Col>
         </Row>
         </>

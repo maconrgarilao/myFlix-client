@@ -110,7 +110,6 @@ export const MovieView = ({ movies, username, FavoriteMovies }) => {
             <Button
             variant="primary"
             onClick={removeFavoriteMovie}
-            disabled={disableRemove}
             >
                 - Remove from Favorites
             </Button>
