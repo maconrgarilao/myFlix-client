@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-export const MovieView = ({ movies, username, FavoriteMovies }) => {
+export const MovieView = () => {
     const { movieId } = useParams();
     const storedToken = localStorage.getItem("token");
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const movie = movies.find((m) => m._id === movieId);
+    const movie = useSelector((state) => state.movies);
     const [movieExists, setMovieExists] = useState(false);
     const [disableRemove, setDisableRemove] = useState(true);
     const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);

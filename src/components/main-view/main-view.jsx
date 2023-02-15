@@ -9,22 +9,31 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
 
 export const MainView = () => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
-    const [movies, setMovies] = useState([]);
-    const [user, setUser] = useState(storedUser? storedUser : null);
+    const movies = useSelector((state) => state.movies.movies);
+    const [user, setUser] = useState(null);
     const [token, setToken] = useState(storedToken? storedToken : null);
+    
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetch("https://myplix.herokuapp.com/movies")
             .then((response) => response.json())
             .then((data) => {
-              console.log("movies from api", data);
-              setMovies(data);
+              const moviesFromApi = data.map((doc) => {
+                return {
+                    id: doc._id,
+                    title: doc.Title,
+                };
+              });
+
+              dispatch(setMovies(moviesFromApi));
             });
-    }, [token]);
+        }, []);
 
     return (
         <BrowserRouter>
@@ -79,8 +88,7 @@ export const MainView = () => {
                             <Col>The list is empty!</Col>
                         ) : (
                             <Col md={8}>
-                                <MovieView 
-                                movies={movies} username={user.Username} favoriteMovies={user.favoriteMovies}/>
+                                <MovieView />
                             </Col>
                         )}
                     </>
@@ -114,7 +122,8 @@ export const MainView = () => {
                         <>
                         {movies.map((movie, movieId) => (
                             <Col className="mb-4" key={movieId} md={3}>
-                                <MovieCard movie={movie} />
+                                <MovieCard movie={movie}
+                                />
                             </Col>
                         ))}
                         </>
