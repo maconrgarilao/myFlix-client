@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { SignupView } from "../signup-view/signup-view";
 import { LoginView } from "../login-view/login-view";
@@ -11,40 +11,73 @@ import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from "../../redux/reducers/user/user";
+import { setToken } from "../../redux/reducers/token";
 
 export const MainView = () => {
-    const storedToken = localStorage.getItem("token");
     const movies = useSelector((state) => state.movies.movies);
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(storedToken? storedToken : null);
+    const user = useSelector((state) => state.user);
+    const token = useSelector((state) => state.token || localStorage.getItem("token"));
     
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch("https://myplix.herokuapp.com/movies")
-            .then((response) => response.json())
-            .then((data) => {
-              const moviesFromApi = data.map((doc) => {
+        if (!token) {
+            return;
+        }
+        getUser();
+        getMovies();
+    }, [token]);
+
+    const getUser = () => {
+        const username = JSON.parse(localStorage.getItem("user")).Username;
+        fetch(`https://myplix.herokuapp.com/users/${username}`, {
+            headers: { 
+            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json",  
+        },
+        })
+        .then((response) => response.json())
+        .then((user) => {
+            dispatch(setUser(user));
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    };
+
+    const getMovies = () => {
+        fetch(`https://myplix.herokuapp.com/movies`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            const moviesFromApi = data.map((doc) => {
                 return {
                     id: doc._id,
                     title: doc.Title,
+                    description: doc.Description,
+                    genre: {
+                        name: doc.Genre.Name,
+                        description: doc.Genre.Definition,
+                    },
+                    director: {
+                        name: doc.Director.Name,
+                        bio: doc.Director.Bio,
+                    },
+                    image: doc.ImagePath,
                 };
-              });
-
-              dispatch(setMovies(moviesFromApi));
             });
-        }, []);
+            dispatch(setMovies(moviesFromApi));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
 
     return (
         <BrowserRouter>
-        <NavigationBar 
-        user={user}
-        onLoggedOut={() => {
-            setUser(null);
-            setToken(null);
-            localStorage.clear();
-        }}
-        />
+        <NavigationBar />
         <Row className="justify-content-md-center">
             <Routes>
                 <Route
@@ -70,8 +103,7 @@ export const MainView = () => {
                         <Navigate to="/" />
                     ) : (
                         <Col md={5}>
-                            <LoginView 
-                            onLoggedIn={(user) => setUser(user)} />
+                            <LoginView />
                         </Col>
                     )}
                     </>
@@ -103,7 +135,7 @@ export const MainView = () => {
                         <Navigate to="/login" replace />
                     ) : (
                         <Col md={8}>
-                            <ProfileView user={user} movies={movies}/>
+                            <ProfileView />
                         </Col>
                     )}
                     </>

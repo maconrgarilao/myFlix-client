@@ -9,9 +9,10 @@ import { useSelector } from "react-redux";
 
 export const MovieView = () => {
     const { movieId } = useParams();
+    const movie = movies.find((m) => m._id === movieId);
     const storedToken = localStorage.getItem("token");
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const movie = useSelector((state) => state.movies);
+    const movies = useSelector((state) => state.movies.movies);
     const [movieExists, setMovieExists] = useState(false);
     const [disableRemove, setDisableRemove] = useState(true);
     const [userFavoriteMovies, setUserFavoriteMovies] = useState(storedUser.FavoriteMovies ? storedUser.FavoriteMovies: FavoriteMovies);
