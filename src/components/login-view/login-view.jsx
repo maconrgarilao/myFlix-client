@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/reducers/user/user";
+import { setUser } from "../../redux/reducers/user";
 import { setToken } from "../../redux/reducers/token";
 
 export const LoginView = () => {

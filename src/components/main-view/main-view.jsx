@@ -11,7 +11,7 @@ import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
-import { setUser } from "../../redux/reducers/user/user";
+import { setUser } from "../../redux/reducers/user";
 import { setToken } from "../../redux/reducers/token";
 
 export const MainView = () => {
@@ -42,7 +42,7 @@ export const MainView = () => {
             dispatch(setUser(user));
         })
         .catch((error) => {
-            console.log(error);
+            console.log('Error happened here!', error);
         })
     };
 
