@@ -16,6 +16,13 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
     const [user, setUser] = useState(storedUser? storedUser : null);
     const [token, setToken] = useState(storedToken? storedToken : null);
+    const [filteredMovieList, setFilteredMovieList] = useState([]);
+
+    function movieSearch(searchString) {
+        setFilteredMovieList(
+            movies.filter((movie) => movie.Title.toLowerCase().includes(searchString))
+        );
+    }
 
     useEffect(() => {
         fetch("https://myplix.herokuapp.com/movies")
@@ -35,6 +42,7 @@ export const MainView = () => {
             setToken(null);
             localStorage.clear();
         }}
+        onSearch={movieSearch}
         />
         <Row className="justify-content-md-center">
             <Routes>
@@ -112,9 +120,11 @@ export const MainView = () => {
                         <Col>The list is empty!</Col>
                     ) : (
                         <>
-                        {movies.map((movie, movieId) => (
-                            <Col className="mb-4" key={movieId} md={3}>
-                                <MovieCard movie={movie} />
+                        {filteredMovieList.map((movie, movieId) => (
+                            <Col className="mb-4" md={3}>
+                                <MovieCard 
+                                movie={movie}
+                                key={movieId} />
                             </Col>
                         ))}
                         </>
