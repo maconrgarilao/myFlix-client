@@ -46794,7 +46794,7 @@ const UpdateForm = ({ storedToken , storedUser  })=>{
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>response.json()).then((updateUser)=>{
+        }).then((response)=>response.json()).then((updatedUser)=>{
             if (updatedUser) {
                 setUser(updatedUser);
                 localStorage.setItem("user", JSON.stringify(updatedUser));

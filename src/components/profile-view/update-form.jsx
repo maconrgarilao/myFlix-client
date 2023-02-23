@@ -17,7 +17,7 @@ export const UpdateForm =({ storedToken, storedUser}) => {
             method: "GET",
             headers: { Authorization: `Bearer ${token}`},
         }).then(response => response.json())
-        .then((updateUser) => {
+        .then((updatedUser) => {
             if (updatedUser) {
                 setUser(updatedUser);
                 localStorage.setItem("user", JSON.stringify(updatedUser));
