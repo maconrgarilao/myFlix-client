@@ -30,6 +30,7 @@ export const MainView = () => {
             .then((data) => {
               console.log("movies from api", data);
               setMovies(data);
+              setFilteredMovieList(data);
             });
     }, [token]);
 
