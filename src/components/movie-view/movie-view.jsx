@@ -93,6 +93,14 @@ export const MovieView = ({ movies, username, FavoriteMovies }) => {
                 <span className="label"><h5>Description: </h5></span>
                 <span className="value">{movie.Description}</span>
             </div>
+            <div className="movie-genre">
+                <span className="label"><h5>Genre: </h5></span>
+                <span className="value">{movie.Genre.Name}</span>
+            </div>
+            <div className="movie-director">
+                <span className="label"><h5>Director: </h5></span>
+                <span className="value">{movie.Director.Name}</span>
+            </div>
         </Col>
         <Col>
             <Link to={`/`}>
