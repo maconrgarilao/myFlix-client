@@ -1,6 +1,4 @@
-import { useParams } from "react-router";
-import React, { useState } from "react";
-import { MovieCard } from "../movie-card/movie-card";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 
 

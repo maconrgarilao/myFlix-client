@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 
 export const UpdateForm =({ storedToken, storedUser}) => {
 
-    const [token, setToken] = useState(storedToken ? storedToken : null);
+    const [token] = useState(storedToken ? storedToken : null);
     const [user, setUser] = useState(storedUser ? storedUser : null);
 
     const [username, setUsername] = useState(user.Username);
@@ -104,7 +104,6 @@ export const UpdateForm =({ storedToken, storedUser}) => {
                  value={birthday}
                  onChange={e => setBirthday(e.target.value)}
                 required
-                placeholder="Enter your email address" 
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
